@@ -1,4 +1,6 @@
 # ASL-Variability-MRI
+Authors: Luis C Sanmiguel, Soetkin Beun, Liza Vanhauwaert, Pim Pullens, Patricia Clement.
+## Introduction
 Pipeline Code to: 
 1. Sort DICOM images with DICOM sort.
 2. Convert DICOM images to .nii.
