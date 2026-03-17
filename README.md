@@ -14,9 +14,12 @@ Pipeline Code to:
 2) [DICOM Sort](https://dicomsort.com/).
 3) Software to convert DICOM to NIfTI ([suggested](https://www.nitrc.org/plugins/mwiki/index.php/dcm2nii:MainPage)).
 4) Python.
- 
+5) Suggested: use [Neurodesk](https://neurodesk.org/).
+
+## Experiment Setup
+![Time diagram](Images/time_scans.png)
 ## Human Pipeline ##
-Deface step 
+Deface step:
 ```sh
 mri_deface T1_mprage_SX.nii   talairach_mixed_with_skull.gca   face.gca   t1_mprage_defaced_SX.nii
 ```
@@ -54,3 +57,6 @@ mri_convert subject1_010/mri/aseg.mgz subject1_010/aseg10.nii.gz
 ```flirt``` (Step 1): Compares the "calibration" image from the X session to the first session to calculate exactly how the subject's “head” moved (the "map" of the shift).
 
 ```flirt``` (Step 2): Uses that "map" to physically move the actual perfusion (ASL) data from the X session so it overlaps perfectly with the first session.
+
+## Pipeline Summary
+![](Images/Pipeline_steps.png)
