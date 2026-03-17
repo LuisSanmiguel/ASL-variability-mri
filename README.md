@@ -1,4 +1,4 @@
-# ASL-variability-mri
+# ASL-Variability-MRI
 Pipeline Code to: 
 1. Sort DICOM images with DICOM sort.
 2. Convert DICOM images to .nii.
@@ -13,7 +13,7 @@ Pipeline Code to:
 1) [FSL - FMRIB Software Library](https://fsl.fmrib.ox.ac.uk/fsl/docs/) and [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki).
 2) [DICOM Sort](https://dicomsort.com/).
 3) Software to convert DICOM to NIfTI ([suggested](https://www.nitrc.org/plugins/mwiki/index.php/dcm2nii:MainPage)).
-4) Python.
+4) Python/Jupyter Notebook.
 5) Suggested: use [Neurodesk](https://neurodesk.org/).
 
 ## Experiment Setup
@@ -50,13 +50,18 @@ mri_vol2vol --mov subject1_0X/ASLX.nii --targ subject1_0X/mri/T1.mgz --lta subje
 ```
 ```mri_convert``` Exports the final tissue segmentation (the labels for GM/WM) into a standard format for data extraction.
 ```sh
-mri_convert subject1_010/mri/aseg.mgz subject1_010/aseg10.nii.gz
+mri_convert subject1_0X/mri/aseg.mgz subject1_0X/asegX.nii.gz
 ```
 ## QASPER Pipeline ##
 
 ```flirt``` (Step 1): Compares the "calibration" image from the X session to the first session to calculate exactly how the subject's “head” moved (the "map" of the shift).
+```sh
+flirt -in ScanX/M0X.nii -ref Scan1/M01.nii -omat ScanX/scanX_to_scan1.mat -dof 6 -out ScanX/cM0X.nii.gz
+```
 
 ```flirt``` (Step 2): Uses that "map" to physically move the actual perfusion (ASL) data from the X session so it overlaps perfectly with the first session.
-
+```sh
+flirt -in ScanX/ASLX.nii -ref Scan1/M01.nii -applyxfm -init ScanX/scanX_to_scan1.mat -out ScanX/cASLX.nii.gz
+```
 ## Pipeline Summary
 ![](Images/Pipeline_steps.png)
